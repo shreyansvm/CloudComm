@@ -15,15 +15,20 @@ from commonMethods  import *
 account_sid = myAccSid
 auth_token  = myAccToken
 
-client = Client(account_sid, auth_token)
+def sendMsgTwoHosts(twoHosts,msgBody):
+    client = Client(account_sid, auth_token)
 
-message = client.messages.create(
-    to  = toNumber,
-    from_= fromNumber,
-    body = "Hello from BytePython! Can you get Samosa tomorrow? Reply : YES(Y) OR NO(N)")
+    # TODO : later, have cell_numbers in names.txt and get cell-num of boths hosts, and send msg to both hosts (default include Shreyans)
+    # host_1 = twoHosts[0].split(' ')
+    # host_2 = twoHosts[1].split(' ')
 
-print(message.sid)
+    message = client.messages.create(to  = toNumber,
+                                    from_= fromNumber,
+                                    body = msgBody)
 
+    print(message.sid)
+
+#sendMsgTwoHosts(['Shreyans', 'Shrek'], "Hello from BytePython!")
 '''
  Resources :
     Twilio Messaging API : https://www.twilio.com/docs/api/messaging
