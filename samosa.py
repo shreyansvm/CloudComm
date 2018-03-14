@@ -5,10 +5,10 @@ from send_sms import *
 hostsNameFile = 'names.txt'
 '''
 Data format in the above file :
-"FirstName LastName Email Status"
+"<FirstName> <LastName> <Email> <Status>"
 Status : 0 - Available, 1 - NotAvailable
 '''
-
+# TODO : Add cell number to file. You will also have to validate each cell-number (get PIN code from them)
 
 '''
 Reads hostsNameFile and returns all eligible hosts based on respective status
@@ -83,10 +83,16 @@ print "Todays hosts are : ", twoHosts
 # send message to two hosts
 sendMsgTwoHosts(twoHosts, msgBodyString(twoHosts, 'start'))
 
-# Possible Scenarios :
-# Both says YES
-# One of them says YES
-# Both of them says NO
+# TODO : how will you call the run.py or the method to keep listening for incoming HTTP POST or GET
 
-print "Updating status #############"
+# TODO : How will you handle different possible scenarios of host responses :
+# Both says YES
+# Both of them says NO : remove both hosts and send a new message to host_3 and host_4. Possible ?
+# No one replies - Assume YES.
+# One of them says YES, other says NO : remove host_2 and add a new host_3 to the conversation. Possible ?
+# Only one replies - Assume YES from other. (bit complex to handle)
+
+# When the hosts are confirmed and its the correct time : update hosts
+# TODO : Update hosts only at the end of the snacks' day ?
+print "#### Updating status ####"
 updateStatusesOfHosts(twoHosts)
