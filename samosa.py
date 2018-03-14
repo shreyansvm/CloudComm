@@ -1,4 +1,6 @@
 import os, re, fileinput
+from commonMethods import *
+from send_sms import *
 
 hostsNameFile = 'names.txt'
 '''
@@ -78,8 +80,10 @@ h1index = 0
 h2index = 1
 print "Todays hosts are : ", twoHosts
 
-# Scenarios :
 # send message to two hosts
+sendMsgTwoHosts(twoHosts, msgBodyString(twoHosts, 'start'))
+
+# Possible Scenarios :
 # Both says YES
 # One of them says YES
 # Both of them says NO
