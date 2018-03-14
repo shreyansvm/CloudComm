@@ -38,29 +38,37 @@ def makeAllHostsAvailable():
 Updates statuses of 2 hosts who got snacks today
 '''
 def updateStatusesOfHosts(twoHosts):
-    print "Todays hosts are : ", twoHosts
+    file = open(hostsNameFile, 'r')
+    # Syntax : sed -i'' '<lineNum> s/0/1/g' <file-name>
+    # line number = index+1
+    host_1_index = -1
+    host_2_index = -1
+    for line in file.readlines():
+        host_1_index += 1
+        host_2_index += 1
+        if line == twoHosts[0]:
+            unixFileCmd1 = "sed -i '' \'" + str(host_1_index+1) + " s/0/1/g\' " + hostsNameFile
+            os.system(unixFileCmd1)
+        if line == twoHosts[1]:
+            unixFileCmd2 = "sed -i '' \'" + str(host_2_index+1) + " s/0/1/g\' " + hostsNameFile
+            os.system(unixFileCmd2)
+    file.flush()
+    file.close()
 
-    updateHost_1 = twoHosts[0].split(' ')[0] + ' ' \
-                   + twoHosts[0].split(' ')[1] + ' ' \
-                    + twoHosts[0].split(' ')[2] + ' ' + '1'
-
-    updateHost_2 = twoHosts[1].split(' ')[0] + ' ' \
-                   + twoHosts[1].split(' ')[1] + ' ' \
-                   + twoHosts[1].split(' ')[2] + ' ' + '1'
-
-    # for line in fileinput.input(hostsNameFile, inplace=True):
-    #     print line.replace(twoHosts[0], updateHost_1)
-    #     print line.replace(twoHosts[1], updateHost_2)
-
+'''
+Hosts with status - available
+'''
 allPossibleHosts = returnHosts()
 #print "allPossibleHosts : " , allPossibleHosts
 
-if len(allPossibleHosts) < 2:
-    # This is the scenario where the list is about to reset
+'''
+# This is the scenario where the list is about to reset
     # so reset and get the first person from top
-    '''All statuses gets reset to 0'''
+'''
+if len(allPossibleHosts) < 2:
+    # All statuses gets reset to 0
     makeAllHostsAvailable()
-    print "List reset #############"
+    print "#### List reset ####"
     newSetOfAvailableHosts = returnHosts()
     for newHosts in newSetOfAvailableHosts:
         allPossibleHosts.append(newHosts)
@@ -68,20 +76,13 @@ if len(allPossibleHosts) < 2:
 twoHosts = allPossibleHosts[0:2]
 h1index = 0
 h2index = 1
-print twoHosts
-
-updateFile = open(hostsNameFile, 'r+')
-for s in updateFile.readlines():
-    if s == 'Shreyans Mulkutkar Shreyans.Mulkutkar@alcatel-lucent.com 0\n':
-        print '\t*** Found Shreyans'
-        #updateFile.write(s.replace(s,'Shreyans Mulkutkar Shreyans.Mulkutkar@alcatel-lucent.com 0\n'))
-updateFile.close()
-
-print "Updating status #############"
-updateStatusesOfHosts(twoHosts)
+print "Todays hosts are : ", twoHosts
 
 # Scenarios :
 # send message to two hosts
 # Both says YES
 # One of them says YES
 # Both of them says NO
+
+print "Updating status #############"
+updateStatusesOfHosts(twoHosts)
